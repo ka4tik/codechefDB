@@ -1,0 +1,61 @@
+{% extends "base.html" %}
+{% block main %}
+{% load static %}
+    <head>
+        <title>Results</title>
+        <!-- <link rel="stylesheet" href="{% static 'assets/css/bootstrap.css' %}"> -->
+        <link rel="stylesheet" href="{% static 'assets/css/pure.css' %}">
+
+        <script src="{% static 'assets/js/jquery.js' %}"></script>
+        <!-- // <script src="{% static 'assets/js/bootstrap.js' %}"></script> -->
+        <script>
+            $(window).bind("load", function() {
+                $('#loading').fadeOut(2000);
+            });
+        </script>
+        <script src="{% static 'assets/js/nprogress.js' %}"></script>
+        <link rel="stylesheet" href="{% static 'assets/css/nprogress.css' %}">
+        <script>
+            $(document).ready(function(){
+                NProgress.start();
+            });
+            $(window).load(function(){
+                NProgress.done();
+            });
+        </script>
+        <style>
+            #loading {
+                background:url("{% static 'assets/images/loading-image.gif' %}") no-repeat center center;
+                height: 100px; width: 100px;
+                position: fixed; left: 50%; top: 50%; z-index: 1000;
+                margin: -25px 0 0 -25px;
+            }
+
+        </style>       
+    </head>
+    <body>
+        
+    <!-- <div id="loading"> </div> -->
+    <h1> your query fetched <span style="color:green">{{rows|length}} </span>results </h1>
+    <!-- <table class="table table-bordered table-condensed table-striped table-hover" > -->
+    <table class="pure-table pure-table-bordered pure-table-striped">
+        <thead>
+            <tr>
+                {% for key in keys %}
+                <th>{{key}}</th>
+                {% endfor %}
+            </tr>
+        </thead>
+        <tbody>
+            {% for row in rows %}
+            <tr>
+                {% for value in row %}
+                <td>{{value}}</td>
+                {% endfor %}
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+
+</body>
+{% endblock %}

@@ -1,0 +1,108 @@
+{% extends "base.html" %}
+{% block main %}
+{% load static %}
+    <head>
+        <title>Query CodeChef database</title>
+        <link rel="stylesheet" href="{% static 'assets/css/bootstrap.css' %}">
+        <link rel="stylesheet" href="{% static 'assets/css/pure.css' %}">
+        <link rel="stylesheet" href="{% static 'assets/css/layouts/gallery-grid.css' %}">
+        <link rel="stylesheet" href="{% static 'assets/css/layouts/gallery.css' %}">
+
+        <script src="{% static 'assets/js/jquery.js' %}"></script>
+        <!-- // <script src="{% static 'assets/js/bootstrap.js' %}"></script> -->
+        <link rel="stylesheet" href="https://yandex.st/highlightjs/8.0/styles/default.min.css">
+        <script src="https://yandex.st/highlightjs/8.0/highlight.min.js"></script>
+        <script>hljs.initHighlightingOnLoad();</script>
+        <script src="{% static 'assets/js/nprogress.js' %}"></script>
+        <link rel="stylesheet" href="{% static 'assets/css/nprogress.css' %}">
+        <script>
+            $(document).ready(function(){
+                NProgress.start();
+            });
+            $(window).load(function(){
+                NProgress.done();
+            });
+        </script>
+    </head>
+    <body>
+        <div id="fb-root"></div>
+        <script>(function(d, s, id) {
+            var js, fjs = d.getElementsByTagName(s)[0];
+            if (d.getElementById(id)) return;
+            js = d.createElement(s); js.id = id;
+            js.src = "//connect.facebook.net/en_US/all.js#xfbml=1&appId=224034087654151";
+            fjs.parentNode.insertBefore(js, fjs);
+            }(document, 'script', 'facebook-jssdk'));</script>
+        <div>
+            <div class="header">
+                <div class="pure-menu pure-menu-open pure-menu-horizontal">
+                    <a style="font-size:30px" class="pure-menu-heading" href="">CODECHEF DB</a>
+
+                    <ul>
+                        <!-- <li class="pure-menu-selected"><a href="/codechef/examples/">EXAMPLES</a></li> -->
+                        <!-- <li><a href="/dturesults/stats/">Statistics</a></li> -->
+                        <li> <div class="fb-like" data-href="https://ka4tik.herokuapp.com/codechef/" data-layout="standard" data-action="like" data-show-faces="true" data-share="true"></div></li>
+                    </ul>
+                </div>
+            </div>
+
+            <div class="container">
+              <h2>Enter sql query below based on schema provided below</h2>
+
+            </div>
+            <div class="container">
+                <form action="results/" method="post">
+                    {% csrf_token %}
+                    <textarea  class="form-control" rows="10" name="alpha">SELECT username,long_global_rank,short_global_rank 
+FROM users 
+WHERE city="delhi" or city="Delhi" 
+ORDER BY long_rating DESC</textarea>
+                    <button type="submit" class="btn btn-warning"> Get Results</button>
+                </form>
+                <h1>Database Schema</h1>
+                <p>
+                <pre></code>
+ CREATE TABLE users
+             (username text primary key,
+             name text,
+             url text,
+             long_rating real,
+             short_rating real,
+             long_global_rank integer,
+             long_country_rank integer,
+             short_global_rank integer,
+             short_country_rank integer,
+             country text,
+             state text,
+             city text,
+             motto text,
+             link text,
+             about_me text,
+             student_professional text,
+             institution text
+             );
+  </code></pre></p>
+                <h1>Examples</h1>
+                <ul>
+                  <li>
+                    <pre><code>select * from users where institution="Delhi Technological University"  order by long_rating desc</pre></code>
+                  
+                    <li><pre><code>select username,long_global_rank,short_global_rank from users where city="delhi" or city="Delhi" order by long_rating desc</pre></code>
+                    </li>
+                    <li>
+                    <pre><code>select * from users where long_rating>6000 and short_rating>2000</pre></code>
+                    </li>
+                    <li>
+                    <pre><code>select distinct institution from users</pre></code>
+                    </li>
+                    <li>
+                        <pre><code>
+                    SELECT username,long_global_rank,short_global_rank 
+                    FROM users
+                    WHERE city like '%llahabad%' ORDER BY long_rating DESC
+                </pre></code>
+            </li>
+                </ul>
+            </div>
+        </body>
+{% endblock %}

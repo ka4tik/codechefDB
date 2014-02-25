@@ -1,0 +1,48 @@
+{% load static %}
+<html>
+    <head>
+        <title>Results</title>
+        <link rel="stylesheet" href="{% static 'assets/css/bootstrap.css' %}">
+        <script src="{% static 'assets/js/jquery.js' %}"></script>
+        <script src="{% static 'assets/js/bootstrap.js' %}"></script>
+        <script src="{% static 'assets/js/sciptcodechefresult.js' %}"></script>
+
+        <script src="{% static 'assets/js/nprogress.js' %}"></script>
+        <link rel="stylesheet" href="{% static 'assets/css/nprogress.css' %}">
+        <script type="text/javascript">
+     
+        </script>
+
+    </head>
+
+    <script type="text/javascript">
+    data = {{ js_data }};
+    widget.init(data);
+    console.log(data[0]);
+   </script>
+    
+     <div id="main"></div>
+
+    <a href="#" id="loadMore">Load More</a>
+    <h1> your query {{alpha}} featched {{rows|length}} results </h1>
+    <table class="table table-bordered table-condensed table-striped table-hover" >
+        <thead>
+            <tr>
+                {% for row in t %}
+                <th>row {{row}} </th>
+                {% endfor %}
+            </tr>
+        </thead>
+        <tbody>
+            {% for row in rows %}
+            <tr>
+                {% for value in row %}
+                <td>{{value}}</td>
+                {% endfor %}
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+
+</body>
+</html>
